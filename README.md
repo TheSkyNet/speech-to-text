@@ -6,14 +6,14 @@ Speech Panel is a GNOME Shell extension for live speech-to-text dictation on Way
 
 ## Install
 
-After publishing this repository, install it with one command:
+Run this one command in a GNOME Wayland session:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OWNER/REPOSITORY/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/TheSkyNet/speech-to-text/main/install.sh | bash
 ```
 
-The repository currently has no configured remote, so replace `OWNER/REPOSITORY` with its actual GitHub path.
+The installer downloads the project to `~/.local/src/speech-to-text`, installs or builds its dependencies, and enables the extension. It may ask for your administrator password when system packages are required.
 
 ## What it installs
 
-The installer installs the GNOME extension, GSettings schema, Whisper.cpp and the selected model, the SDL2 streaming binary, audio support, dotool for Wayland typing, required build tools, and the user service needed to type into the focused application. It then enables the extension.
+The installer sets up the GNOME Shell extension, GSettings schema, whisper.cpp and its streaming binary, the selected Whisper model, SDL2 and audio support, the Wayland typing backend, the dotool user service, and the required build tools. After installation, focus a text field and click the Speech Panel button to start or stop live dictation.
