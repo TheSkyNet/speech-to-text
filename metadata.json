@@ -1,0 +1,12 @@
+{
+  "name": "Speech Panel",
+  "description": "A GNOME Shell extension that provides speech-to-text functionality using whisper.cpp (C++ implementation of OpenAI's Whisper model). Activate with a keyboard shortcut to record audio and automatically insert the transcribed text into any active text field.",
+  "uuid": "speech-panel@localhost",
+  "version": 2,
+  "shell-version": [
+    "48",
+    "50"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.speech-panel",
+  "gettext-domain": "speech-panel"
+}

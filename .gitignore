@@ -1,0 +1,30 @@
+# Local IDE and assistant metadata
+.idea/
+.junie/
+
+# Archived experiments and local scratch files
+.junk/
+
+# Generated schema cache
+schemas/gschemas.compiled
+
+# Local runtime output
+*.log
+*.pid
+*.tmp
+*.swp
+*~
+
+# Downloaded or compiled speech assets
+models/
+*.bin
+*.wav
+*.flac
+*.mp3
+*.ogg
+
+# Local build/cache directories
+build/
+dist/
+.cache/
+

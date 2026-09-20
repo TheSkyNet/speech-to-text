@@ -1,0 +1,49 @@
+/* Speech Panel Extension Styles */
+
+.speech-panel-icon {
+    transition: color 0.3s ease;
+}
+
+.speech-panel-icon.idle {
+    color: #888888;
+}
+
+.speech-panel-icon.listening {
+    color: #ff4444;
+    animation: pulse 1s infinite;
+}
+
+.speech-panel-icon.processing {
+    color: #ffaa00;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Panel button hover effect */
+.panel-button:hover .speech-panel-icon {
+    opacity: 0.8;
+}
+
+/* Settings menu styling */
+.speech-panel-menu {
+    min-width: 200px;
+}
+
+.speech-panel-menu-item {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.speech-panel-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.speech-panel" path="/org/gnome/shell/extensions/speech-panel/">
+    
+    <!-- Keyboard Shortcut Settings -->
+    <key name="toggle-recording-shortcut" type="as">
+      <default>['&lt;Super&gt;&lt;Shift&gt;s']</default>
+      <summary>Keyboard shortcut to toggle speech recording</summary>
+      <description>The keyboard shortcut used to start and stop speech recording</description>
+    </key>
+
+    <!-- Cancel/Stop Shortcut (Escape by default) -->
+    <key name="cancel-recording-shortcut" type="as">
+      <default>['Escape']</default>
+      <summary>Keyboard shortcut to cancel/stop recording</summary>
+      <description>Additional key to stop recording immediately (Escape by default)</description>
+    </key>
+    
+    <!-- Whisper Model Settings -->
+    <key name="whisper-model" type="s">
+      <choices>
+        <choice value='tiny'/>
+        <choice value='tiny.en'/>
+        <choice value='base'/>
+        <choice value='small'/>
+        <choice value='medium'/>
+        <choice value='large'/>
+        <choice value='large-v3'/>
+      </choices>
+      <default>'base'</default>
+      <summary>Whisper model to use for transcription</summary>
+      <description>The Whisper model size to use. Larger models are more accurate but slower.</description>
+    </key>
+    
+    <key name="whisper-language" type="s">
+      <default>'auto'</default>
+      <summary>Language for speech recognition</summary>
+      <description>Language code for Whisper transcription (auto for automatic detection)</description>
+    </key>
+    
+    <!-- Audio Recording Settings -->
+    <key name="audio-sample-rate" type="i">
+      <range min="8000" max="48000"/>
+      <default>16000</default>
+      <summary>Audio sample rate in Hz</summary>
+      <description>Sample rate for audio recording. 16000 Hz is optimal for Whisper.</description>
+    </key>
+    
+    <key name="audio-format" type="s">
+      <choices>
+        <choice value='S16_LE'/>
+        <choice value='S24_LE'/>
+        <choice value='S32_LE'/>
+      </choices>
+      <default>'S16_LE'</default>
+      <summary>Audio format for recording</summary>
+      <description>Audio format to use for recording</description>
+    </key>
+    
+    <key name="audio-channels" type="i">
+      <range min="1" max="2"/>
+      <default>1</default>
+      <summary>Number of audio channels</summary>
+      <description>Number of audio channels (1=mono, 2=stereo). Mono is recommended for speech.</description>
+    </key>
+    
+    <!-- Recording Behavior Settings -->
+    <key name="max-recording-duration" type="i">
+      <range min="5" max="300"/>
+      <default>30</default>
+      <summary>Maximum recording duration in seconds</summary>
+      <description>Maximum time to record audio before automatically stopping</description>
+    </key>
+    
+    <key name="show-notifications" type="b">
+      <default>false</default>
+      <summary>Show notification messages</summary>
+      <description>Whether to show notification messages for transcription results and errors</description>
+    </key>
+
+    <!-- Sound Effects Settings -->
+    <key name="sounds-enabled" type="b">
+      <default>false</default>
+      <summary>Enable sound effects</summary>
+      <description>When enabled, the extension will play a short ding sound on certain actions (e.g., shortcut press).</description>
+    </key>
+    
+    <!-- Advanced Settings -->
+    <key name="whisper-executable" type="s">
+      <default>'~/apps/whisper.cpp/build/bin/whisper-cli'</default>
+      <summary>Path to Whisper.cpp executable</summary>
+      <description>Path to the whisper.cpp command line tool (installed in ~/apps/whisper.cpp/build/bin/whisper-cli)</description>
+    </key>
+    
+    <key name="audio-recorder" type="s">
+      <choices>
+        <choice value='arecord'/>
+        <choice value='parecord'/>
+        <choice value='ffmpeg'/>
+      </choices>
+      <default>'arecord'</default>
+      <summary>Audio recording tool</summary>
+      <description>Audio recording tool to use (arecord for ALSA, parecord for PulseAudio)</description>
+    </key>
+    
+    <!-- Real-time typing mode: Type As I Speak -->
+    <key name="type-as-i-speak-enabled" type="b">
+      <default>true</default>
+      <summary>Type As I Speak</summary>
+      <description>Type transcriptions into the focused application while you speak.</description>
+    </key>
+
+    <!-- Type As I Speak cadence (milliseconds) -->
+    <key name="type-as-i-speak-interval-ms" type="d">
+      <range min="0.0" max="100000.0"/>
+      <default>800.0</default>
+      <summary>Type As I Speak interval in milliseconds</summary>
+      <description>How often to process incremental transcription while recording. Lower is more responsive but uses more CPU. Recommended 400–1200ms.</description>
+    </key>
+    
+    <!-- Type As I Speak Stream (mutually exclusive with type-as-i-speak-enabled) -->
+    <key name="type-as-i-speak-stream-enabled" type="b">
+      <default>false</default>
+      <summary>Type As I Speak Stream</summary>
+      <description>Use whisper.cpp's microphone streaming binary instead of the reliable file-backed live transcription mode.</description>
+    </key>
+
+    <!-- Stream typing tuning -->
+    <key name="stream-min-chunk" type="i">
+      <range min="1" max="20"/>
+      <default>1</default>
+      <summary>Minimum characters per live insert</summary>
+      <description>Minimum number of characters to accumulate before inserting live (unless a clear boundary like space or punctuation is reached).</description>
+    </key>
+
+    <key name="stream-flush-delay" type="i">
+      <range min="0" max="250"/>
+      <default>10</default>
+      <summary>Stream flush debounce (ms)</summary>
+      <description>Debounce time in milliseconds for partial results before inserting live text.</description>
+    </key>
+
+    <key name="stream-max-chunk" type="i">
+      <range min="40" max="400"/>
+      <default>220</default>
+      <summary>Maximum characters per live insert</summary>
+      <description>Upper limit on the number of characters inserted in one operation to prevent target app jank.</description>
+    </key>
+
+    <key name="stream-stabilize-ms" type="i">
+      <range min="0" max="400"/>
+      <default>0</default>
+      <summary>Stabilization window (ms)</summary>
+      <description>Additional delay window before flushing if the partial text doesn’t end with whitespace/punctuation. Helps avoid backtracking artifacts.</description>
+    </key>
+    
+    <!-- Debug Settings -->
+    <key name="debug-mode" type="b">
+      <default>false</default>
+      <summary>Enable debug mode</summary>
+      <description>When enabled, the extension may write diagnostic artifacts like logs and audio test files to the Desktop. Keep disabled for normal use.</description>
+    </key>
+  </schema>
+</schemalist>
