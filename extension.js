@@ -192,11 +192,15 @@ export default class SpeechPanelExtension extends Extension {
             const liveValue = gSettings.get_user_value('type-as-i-speak-enabled');
             const streamValue = gSettings.get_user_value('type-as-i-speak-stream-enabled');
             if (liveValue === null && streamValue === null) {
-                gSettings.set_boolean('type-as-i-speak-enabled', true);
-                gSettings.set_boolean('type-as-i-speak-stream-enabled', false);
+                gSettings.set_string('whisper-model', 'base');
+                gSettings.set_string('whisper-language', 'en');
+                gSettings.set_boolean('type-as-i-speak-enabled', false);
+                gSettings.set_boolean('type-as-i-speak-stream-enabled', true);
+                gSettings.set_double('type-as-i-speak-interval-ms', 1000.0);
+                gSettings.set_boolean('debug-mode', false);
                 gSettings.set_boolean('show-notifications', false);
                 gSettings.set_boolean('sounds-enabled', false);
-                log('Enabled live typing defaults for this installation');
+                log('Applied default live stream typing settings');
             } else if (liveValue === null && streamValue?.get_boolean?.() === true) {
                 gSettings.set_boolean('type-as-i-speak-enabled', false);
             }

@@ -33,7 +33,7 @@
     </key>
     
     <key name="whisper-language" type="s">
-      <default>'auto'</default>
+      <default>'en'</default>
       <summary>Language for speech recognition</summary>
       <description>Language code for Whisper transcription (auto for automatic detection)</description>
     </key>
@@ -67,7 +67,7 @@
     <!-- Recording Behavior Settings -->
     <key name="max-recording-duration" type="i">
       <range min="5" max="300"/>
-      <default>30</default>
+      <default>300</default>
       <summary>Maximum recording duration in seconds</summary>
       <description>Maximum time to record audio before automatically stopping</description>
     </key>
@@ -113,14 +113,14 @@
     <!-- Type As I Speak cadence (milliseconds) -->
     <key name="type-as-i-speak-interval-ms" type="d">
       <range min="0.0" max="100000.0"/>
-      <default>800.0</default>
+      <default>1000.0</default>
       <summary>Type As I Speak interval in milliseconds</summary>
       <description>How often to process incremental transcription while recording. Lower is more responsive but uses more CPU. Recommended 400–1200ms.</description>
     </key>
     
     <!-- Type As I Speak Stream (mutually exclusive with type-as-i-speak-enabled) -->
     <key name="type-as-i-speak-stream-enabled" type="b">
-      <default>false</default>
+      <default>true</default>
       <summary>Type As I Speak Stream</summary>
       <description>Use whisper.cpp's microphone streaming binary instead of the reliable file-backed live transcription mode.</description>
     </key>
