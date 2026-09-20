@@ -7,6 +7,7 @@
 
 # Generated schema cache
 schemas/gschemas.compiled
+.coverage/
 
 # Local runtime output
 *.log
@@ -27,4 +28,3 @@ models/
 build/
 dist/
 .cache/
-
