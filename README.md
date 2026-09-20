@@ -16,4 +16,4 @@ The installer downloads the project to `~/.local/src/speech-to-text`, installs o
 
 ## What it installs
 
-The installer sets up the GNOME Shell extension, GSettings schema, whisper.cpp and its streaming binary, the selected Whisper model, SDL2 and audio support, the Wayland typing backend, the dotool user service, and the required build tools. After installation, focus a text field and click the Speech Panel button to start or stop live dictation.
+The installer sets up the GNOME Shell extension, GSettings schema, whisper.cpp and its streaming binary, the selected Whisper model, SDL2 and audio support, the required build tools, and dotool built from its upstream source when it is not already installed. It enables the dotool user service for Wayland typing; after installation, focus a text field and click the Speech Panel button to start or stop live dictation.

@@ -130,6 +130,7 @@ ensure_ydotool_helper() {
 ensure_dotool_helper() {
     local client="$HOME/.local/bin/dotoolc"
     local daemon="$HOME/.local/bin/dotoold"
+    local binary="$HOME/.local/bin/dotool"
     if [ -x "$client" ] && [ -x "$daemon" ]; then
         mkdir -p "$HOME/.config/systemd/user"
         cp "$EXTENSION_DIR/speech-panel-dotool.service" \
@@ -139,8 +140,47 @@ ensure_dotool_helper() {
         print_success "dotool Wayland typing helper is installed and enabled."
         return 0
     fi
-    print_status "dotool is not packaged on this Ubuntu release; install it from its upstream source."
-    return 1
+
+    print_status "Building dotool from its upstream source..."
+    if ! command_exists go; then
+        if command_exists apt-get; then
+            sudo apt-get update || true
+            sudo apt-get install -y golang-go || true
+        elif command_exists dnf; then
+            sudo dnf install -y golang || true
+        elif command_exists pacman; then
+            sudo pacman -S --needed --noconfirm go || true
+        fi
+    fi
+    if ! command_exists go; then
+        print_warning "Go is unavailable; dotool could not be built."
+        return 1
+    fi
+
+    local source_dir="$HOME/.cache/speech-panel/dotool"
+    mkdir -p "$(dirname "$source_dir")" "$HOME/.local/bin"
+    if [ ! -d "$source_dir/.git" ]; then
+        git clone --depth 1 https://git.sr.ht/~geb/dotool "$source_dir"
+    else
+        git -C "$source_dir" pull --ff-only
+    fi
+    (
+        cd "$source_dir"
+        ./build.sh
+        cp dotool dotoolc dotoold "$HOME/.local/bin/"
+        chmod 755 "$binary" "$client" "$daemon"
+    )
+    mkdir -p "$HOME/.config/systemd/user"
+    cp "$EXTENSION_DIR/speech-panel-dotool.service" \
+        "$HOME/.config/systemd/user/speech-panel-dotool.service"
+    systemctl --user daemon-reload || true
+    systemctl --user enable --now speech-panel-dotool.service || true
+    if [ ! -x "$client" ] || [ ! -x "$daemon" ]; then
+        print_warning "dotool build completed without usable client and daemon binaries."
+        return 1
+    fi
+    print_success "dotool built and enabled for Wayland typing."
+    return 0
 }
 
 ensure_selected_whisper_model() {
